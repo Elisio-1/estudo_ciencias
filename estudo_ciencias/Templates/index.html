@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="text-center mb-5 p-4 bg-light rounded shadow-sm">
+    <h1 class="display-5 fw-bold text-primary">Portal de Estudos de Ciências e Admissão</h1>
+    <p class="lead text-secondary">Acesse por Cursos, Categorias (Focos) ou use a barra de pesquisa.</p>
+</header>
+
+<h2 class="mb-3 text-primary"><i class="bi bi-tags-fill me-2"></i>Acessar por Categorias</h2>
+{% if focos_principais %}
+<div class="mb-5 d-flex flex-wrap gap-2">
+    {% for foco in focos_principais %}
+    <a href="{{ url_for('pesquisa', termo=foco.nome) }}" class="btn btn-outline-primary btn-lg rounded-pill shadow-sm">
+        {{ foco.nome }}
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if not cursos %}
+    <div class="alert alert-warning text-center p-4">
+        <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Nenhum curso cadastrado ainda!</h4>
+        <p>Por favor, acesse o <a href="{{ url_for('admin_login') }}" class="alert-link fw-bold">Painel de Administração</a> para adicionar os cursos (Matemática, Física, etc.) e os focos (10ª Classe, Admissão, Preparação para Exames).</p>
+    </div>
+{% else %}
+    <h2 class="mb-4 text-primary"><i class="bi bi-grid-fill me-2"></i>Cursos Disponíveis (Matemática, Física, etc.)</h2>
+    
+    <div class="row g-4">
+        {% for curso in cursos %}
+        <div class="col-12">
+            <div class="card shadow border-0 h-100 
+                 {% if loop.index % 3 == 1 %}bg-success
+                 {% elif loop.index % 3 == 2 %}bg-warning
+                 {% else %}bg-info
+                 {% endif %} text-white">
+                
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 class="card-title fw-bolder">{{ curso.nome }}</h3>
+                        <p class="card-text">Conteúdo de preparação para exames de 10ª, 12ª Classe e Admissão.</p>
+                    </div>
+                    
+                    <a href="{{ url_for('curso_detalhe', curso_id=curso.id) }}" class="btn btn-light btn-lg fw-bold text-dark shadow-sm">
+                        <i class="bi bi-arrow-right-circle-fill me-2"></i> ACESSAR AGORA
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

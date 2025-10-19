@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Cursos</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ curso.nome }}</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4">{{ curso.nome }} - Materiais de Estudo</h1>
+<p class="lead">Navegue pelo conteúdo organizado por Foco e Nível de Preparação.</p>
+<hr>
+
+<div class="accordion" id="accordionFocos">
+    {% for foco_nome, materiais in materiais_organizados.items() %}
+    <div class="accordion-item mb-3 shadow-sm">
+        <h2 class="accordion-header" id="heading{{ loop.index }}">
+            <button class="accordion-button {% if loop.index > 1 %}collapsed{% endif %} fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}" aria-controls="collapse{{ loop.index }}">
+                <i class="bi bi-folder-fill me-2 text-primary"></i> Preparação: {{ foco_nome }}
+            </button>
+        </h2>
+        <div id="collapse{{ loop.index }}" class="accordion-collapse collapse {% if loop.index == 1 %}show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#accordionFocos">
+            <div class="accordion-body">
+                
+                {% for material in materiais %}
+                <div class="card mb-3 border-0 bg-light">
+                    <div class="card-body">
+                        <span class="badge {% if material.tipo == 'video' %}bg-danger{% elif material.tipo == 'livro' %}bg-success{% else %}bg-info{% endif %} me-2">{{ material.tipo.upper() }}</span>
+                        <h5 class="card-title d-inline-block">{{ material.titulo }}</h5>
+                        <p class="card-text text-muted">{{ material.descricao }}</p>
+
+                        {% if material.tipo == 'video' %}
+                            <video width="100%" height="360" controls class="mt-2 rounded">
+                                <source src="{{ url_for('static', filename='../uploads/' + material.filename) }}">
+                                Seu navegador não suporta a tag de vídeo.
+                            </video>
+                        {% elif material.tipo == 'foto' %}
+                            <img src="{{ url_for('static', filename='../uploads/' + material.filename) }}" alt="{{ material.titulo }}" class="img-fluid rounded mt-2" style="max-height: 300px;">
+                        {% elif material.tipo == 'livro' %}
+                            <a href="{{ url_for('static', filename='../uploads/' + material.filename) }}" target="_blank" class="btn btn-sm btn-outline-success mt-2">
+                                <i class="bi bi-download"></i> Baixar/Ver Livro
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">Nenhum material encontrado para este curso.</div>
+    {% endfor %}
+</div>
+{% endblock %}

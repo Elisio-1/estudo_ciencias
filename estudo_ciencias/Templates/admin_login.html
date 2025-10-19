@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h4 class="mb-0">Acesso ao Painel de Administração</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-muted text-center">Insira suas credenciais. (Email: melisiojorge@gmail.com / PIN: hercul1)</p>
+                <form method="POST" action="{{ url_for('admin_login') }}">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email do Administrador:</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="melisiojorge@gmail.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="pin" class="form-label">PIN (Senha):</label>
+                        <input type="password" id="pin" name="pin" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 btn-lg">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

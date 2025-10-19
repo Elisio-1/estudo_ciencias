@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Início</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Pesquisa</li>
+    </ol>
+</nav>
+
+<h1 class="mb-4"><i class="bi bi-search me-2 text-primary"></i>Resultados da Pesquisa</h1>
+
+{% if termo %}
+    <p class="lead">Exibindo resultados para: **"{{ termo }}"**</p>
+{% endif %}
+
+{% if resultados %}
+    <div class="list-group">
+        {% for material in resultados %}
+        <a href="{{ url_for('curso_detalhe', curso_id=material.curso.id) }}" class="list-group-item list-group-item-action flex-column align-items-start shadow-sm mb-3">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 text-primary">{{ material.titulo }}</h5>
+                <small class="badge bg-secondary">{{ material.tipo.upper() }}</small>
+            </div>
+            <p class="mb-1">{{ material.descricao|truncate(150) }}</p>
+            <small class="text-muted">
+                **Curso:** {{ material.curso.nome }} | 
+                **Categoria (Foco):** {{ material.foco.nome }}
+            </small>
+        </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning mt-4 p-4">
+        <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Nenhum resultado encontrado.</h4>
+        <p>Tente refinar sua pesquisa ou utilize as categorias e cursos disponíveis no menu principal.</p>
+    </div>
+{% endif %}
+{% endblock %}

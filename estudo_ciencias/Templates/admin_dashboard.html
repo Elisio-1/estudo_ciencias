@@ -1,0 +1,48 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+<h2 class="mb-4">Visão Geral do Conteúdo</h2>
+
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Cursos Cadastrados</h5>
+                <p class="card-text fs-1">{{ cursos }}</p>
+                <a href="{{ url_for('admin_cursos') }}" class="btn btn-light btn-sm"><i class="bi bi-gear-fill me-2"></i>Gerenciar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Materiais de Estudo</h5>
+                <p class="card-text fs-1">{{ materiais }}</p>
+                <a href="{{ url_for('admin_upload') }}" class="btn btn-light btn-sm"><i class="bi bi-plus-circle me-2"></i>Adicionar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Níveis de Foco</h5>
+                <p class="card-text fs-1">{{ focos }}</p>
+                <a href="{{ url_for('admin_focos') }}" class="btn btn-light btn-sm"><i class="bi bi-gear-fill me-2"></i>Gerenciar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Alunos Cadastrados</h5>
+                <p class="card-text fs-1">{{ alunos }}</p>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-light btn-sm disabled"><i class="bi bi-person-lines-fill me-2"></i>Detalhes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info mt-4">
+    <i class="bi bi-info-circle-fill me-2"></i>Lembre-se: Você precisa cadastrar Cursos e Focos **antes** de fazer upload de qualquer material.
+</div>
+{% endblock %}

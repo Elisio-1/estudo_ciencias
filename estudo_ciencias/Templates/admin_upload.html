@@ -1,0 +1,58 @@
+{% extends "admin_base.html" %}
+
+{% block admin_content %}
+    <form method="POST" enctype="multipart/form-data">
+        
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título do Material:</label>
+            <input type="text" id="titulo" name="titulo" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição Breve:</label>
+            <textarea id="descricao" name="descricao" class="form-control"></textarea>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="tipo" class="form-label">Tipo de Arquivo:</label>
+                <select id="tipo" name="tipo" class="form-select" required>
+                    <option value="">Selecione o Tipo</option>
+                    <option value="video">Vídeo (.mp4, .mov)</option>
+                    <option value="foto">Foto (.jpg, .png)</option>
+                    <option value="livro">Livro/PDF (.pdf, .epub)</option>
+                </select>
+            </div>
+            
+            <div class="col-md-4">
+                <label for="curso_id" class="form-label">Pertence ao Curso:</label>
+                <select id="curso_id" name="curso_id" class="form-select" required>
+                    <option value="">Selecione o Curso</option>
+                    {% for curso in cursos %}
+                        <option value="{{ curso.id }}">{{ curso.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="foco_id" class="form-label">Foco/Nível:</label>
+                <select id="foco_id" name="foco_id" class="form-select" required>
+                    <option value="">Selecione o Foco</option>
+                    {% for foco in focos %}
+                        <option value="{{ foco.id }}">{{ foco.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="file" class="form-label">Selecione o Arquivo:</label>
+            <input type="file" id="file" name="file" class="form-control" required>
+            <div class="form-text">Extensões permitidas: png, jpg, mp4, mov, pdf, epub.</div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg">
+            <i class="bi bi-cloud-arrow-up me-2"></i> Enviar Material
+        </button>
+    </form>
+{% endblock %}
